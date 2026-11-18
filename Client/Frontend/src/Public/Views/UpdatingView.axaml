@@ -1,0 +1,14 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.UpdatingView"
+             x:CompileBindings="False">
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel MaxWidth="440" Margin="24,32" Spacing="12" VerticalAlignment="Center">
+      <TextBlock Text="Personal Assistant" Classes="title" FontSize="30" HorizontalAlignment="Center" Margin="0,0,0,12" />
+      <TextBlock Text="{Binding Status}" Classes="wrap" HorizontalAlignment="Center" TextAlignment="Center" />
+      <ProgressBar IsIndeterminate="{Binding IsProgressUnknown}" Minimum="0" Maximum="1" Value="{Binding Progress}" IsVisible="{Binding IsWorking}" Foreground="{DynamicResource Accent}" />
+      <Button Content="{Binding CloseText}" Command="{Binding CloseCommand}" IsVisible="{Binding CanClose}" HorizontalAlignment="Stretch" Margin="0,6,0,0" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

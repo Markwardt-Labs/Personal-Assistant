@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Markwardt.PersonalAssistant.Client.ConnectView"
+             x:CompileBindings="False">
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel MaxWidth="440" Margin="24,32" Spacing="10" VerticalAlignment="Center">
+      <TextBlock Text="{Binding Title}" Classes="title" FontSize="30" HorizontalAlignment="Center" Margin="0,0,0,16" />
+      <TextBox Text="{Binding Host}" PlaceholderText="Host, such as 192.168.1.20" />
+      <TextBox Text="{Binding Port}" PlaceholderText="Port, such as 52680" />
+      <TextBox Text="{Binding AccessKey}" PlaceholderText="Access key" PasswordChar="*" />
+      <TextBlock Text="{Binding Error}" IsVisible="{Binding HasError}" Classes="error" />
+      <Button Content="Connect" Command="{Binding ConnectCommand}" Classes="primary" HorizontalAlignment="Stretch" Margin="0,6,0,0" />
+      <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" Foreground="{DynamicResource Accent}" />
+      <TextBlock Text="{Binding Version}" Classes="meta" HorizontalAlignment="Center" Margin="0,12,0,0" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

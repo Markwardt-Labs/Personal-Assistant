@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.UpdateDialogView"
+             x:CompileBindings="False">
+  <Border Background="{DynamicResource Scrim}">
+    <Border Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Border}" BorderThickness="1" CornerRadius="16" Padding="16" Margin="24" MaxWidth="420" VerticalAlignment="Center">
+      <StackPanel Spacing="10">
+        <TextBlock Text="Update Personal Assistant?" Classes="heading" />
+        <TextBlock Text="{Binding Summary}" Classes="muted wrap" />
+        <TextBlock Text="{Binding Error}" IsVisible="{Binding HasError}" Classes="error" />
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+          <Button Grid.Column="0" Content="{Binding CloseText}" Command="{Binding CloseCommand}" HorizontalAlignment="Stretch" />
+          <Button Grid.Column="1" Content="Update" Command="{Binding ConfirmCommand}" Classes="primary" HorizontalAlignment="Stretch" />
+        </Grid>
+      </StackPanel>
+    </Border>
+  </Border>
+</UserControl>

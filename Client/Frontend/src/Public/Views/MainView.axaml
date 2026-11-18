@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.MainView"
+             x:CompileBindings="False">
+  <Border Background="{DynamicResource Background}">
+    <ContentControl Content="{Binding Current}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+      <ContentControl.DataTemplates>
+        <DataTemplate DataType="local:ConnectViewModel">
+          <local:ConnectView />
+        </DataTemplate>
+        <DataTemplate DataType="local:HomeViewModel">
+          <local:HomeView />
+        </DataTemplate>
+        <DataTemplate DataType="local:VersionMismatchViewModel">
+          <local:VersionMismatchView />
+        </DataTemplate>
+        <DataTemplate DataType="local:UpdateViewModel">
+          <local:UpdatingView />
+        </DataTemplate>
+      </ContentControl.DataTemplates>
+    </ContentControl>
+  </Border>
+</UserControl>

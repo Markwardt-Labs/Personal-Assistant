@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.MailMessageView"
+             x:CompileBindings="False">
+  <Grid RowDefinitions="Auto,*">
+    <Border Grid.Row="0" Classes="bar">
+      <Grid ColumnDefinitions="Auto,*">
+        <Button Grid.Column="0" Command="{Binding BackCommand}" Classes="icon" VerticalAlignment="Top" AutomationProperties.Name="Back">
+          <PathIcon Data="{StaticResource IconBack}" />
+        </Button>
+        <StackPanel Grid.Column="1" Spacing="1" Margin="4,6,8,6">
+          <TextBlock Text="{Binding Subject}" Classes="entryTitle" />
+          <TextBlock Text="{Binding From}" Classes="body" />
+          <TextBlock Text="{Binding To}" Classes="meta" TextWrapping="Wrap" />
+          <TextBlock Text="{Binding Cc}" IsVisible="{Binding HasCc}" Classes="meta" TextWrapping="Wrap" />
+          <TextBlock Text="{Binding TimeText}" Classes="meta" />
+        </StackPanel>
+      </Grid>
+    </Border>
+    <ScrollViewer Grid.Row="1">
+      <StackPanel Margin="12,8" Spacing="8">
+        <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsLoading}" Foreground="{DynamicResource Accent}" />
+        <TextBlock Text="{Binding Error}" IsVisible="{Binding HasError}" Classes="error" />
+        <SelectableTextBlock Text="{Binding Body}" FontSize="14" />
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

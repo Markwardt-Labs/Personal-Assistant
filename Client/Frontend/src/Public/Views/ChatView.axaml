@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.ChatView"
+             x:CompileBindings="False">
+  <Grid RowDefinitions="*,Auto">
+    <ScrollViewer x:Name="Scroller" Grid.Row="0" VerticalScrollBarVisibility="Auto">
+      <ItemsControl ItemsSource="{Binding Messages}" Margin="12,8">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="local:MessageViewModel">
+            <Border Classes="bubble" Classes.user="{Binding IsUser}" Margin="0,3">
+              <SelectableTextBlock Text="{Binding Text}" />
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+
+    <Border Grid.Row="1" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Border}" BorderThickness="0,1,0,0" Padding="8">
+      <StackPanel Spacing="6">
+        <TextBlock Text="{Binding Error}" IsVisible="{Binding HasError}" Classes="error" />
+        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="6">
+          <TextBox x:Name="Box" Grid.Column="0" Text="{Binding Input}" PlaceholderText="Message" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="160" />
+          <Button Grid.Column="1" Command="{Binding StopCommand}" IsVisible="{Binding IsWorking}" Classes="icon" VerticalAlignment="Bottom" AutomationProperties.Name="Stop">
+            <PathIcon Data="{StaticResource IconStop}" />
+          </Button>
+          <Button Grid.Column="2" Command="{Binding SendCommand}" Classes="icon primary" VerticalAlignment="Bottom" AutomationProperties.Name="Send">
+            <PathIcon Data="{StaticResource IconSend}" />
+          </Button>
+        </Grid>
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>

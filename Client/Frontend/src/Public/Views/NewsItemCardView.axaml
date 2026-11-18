@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.NewsItemCardView"
+             x:CompileBindings="False">
+  <Border Classes="card">
+    <Grid ColumnDefinitions="*,Auto">
+      <Button Grid.Column="0" Command="{Binding OpenCommand}" Classes="entry">
+        <StackPanel Spacing="2" Margin="0,2">
+          <TextBlock Text="{Binding Title}" Classes="entryTitle" />
+          <TextBlock Text="{Binding Summary}" Classes="body" MaxLines="3" TextTrimming="CharacterEllipsis" />
+          <TextBlock Text="{Binding Meta}" Classes="meta" />
+        </StackPanel>
+      </Button>
+      <local:ReactionView Grid.Column="1" DataContext="{Binding Reaction}" VerticalAlignment="Top" />
+    </Grid>
+  </Border>
+</UserControl>

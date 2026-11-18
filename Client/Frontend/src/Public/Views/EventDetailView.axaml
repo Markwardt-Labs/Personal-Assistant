@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.EventDetailView"
+             x:CompileBindings="False">
+  <Border Classes="overlay">
+    <Grid RowDefinitions="Auto,*">
+      <Border Grid.Row="0" Classes="bar">
+        <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+          <Button Grid.Column="0" Command="{Binding CloseDetailCommand}" Classes="icon" VerticalAlignment="Top" AutomationProperties.Name="Back">
+            <PathIcon Data="{StaticResource IconBack}" />
+          </Button>
+          <StackPanel Grid.Column="1" Spacing="1" Margin="4,6,8,6">
+            <Grid ColumnDefinitions="Auto,*">
+              <PathIcon Grid.Column="0" Data="{StaticResource IconStar}" IsVisible="{Binding Selected.IsSuggestion}" Width="12" Height="12" Foreground="{DynamicResource Suggested}" Margin="0,0,6,0" />
+              <TextBlock Grid.Column="1" Text="{Binding Selected.Title}" Classes="entryTitle" />
+            </Grid>
+            <TextBlock Text="{Binding Selected.TimeText}" Classes="meta" />
+          </StackPanel>
+          <Button Grid.Column="2" Command="{Binding Selected.OpenUrlCommand}" IsVisible="{Binding Selected.HasUrl}" Classes="icon" VerticalAlignment="Top" AutomationProperties.Name="Open Page">
+            <PathIcon Data="{StaticResource IconOpen}" />
+          </Button>
+          <Panel Grid.Column="3" IsVisible="{Binding Selected.HasReaction}" VerticalAlignment="Top">
+            <local:ReactionView DataContext="{Binding Selected.Reaction}" />
+          </Panel>
+        </Grid>
+      </Border>
+      <ScrollViewer Grid.Row="1">
+        <StackPanel Margin="12,8" Spacing="8">
+          <TextBlock Text="{Binding Selected.Place}" IsVisible="{Binding Selected.HasPlace}" Classes="body" />
+          <TextBlock Text="{Binding Selected.Details}" IsVisible="{Binding Selected.HasDetails}" Classes="body" />
+          <TextBlock Text="{Binding Selected.FeedName}" IsVisible="{Binding Selected.IsSuggestion}" Classes="meta" TextWrapping="Wrap" />
+          <TextBlock Text="{Binding Selected.Attendees}" IsVisible="{Binding Selected.HasAttendees}" Classes="meta" TextWrapping="Wrap" />
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+  </Border>
+</UserControl>

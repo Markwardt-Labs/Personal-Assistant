@@ -1,0 +1,83 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.HomeView"
+             x:CompileBindings="False">
+  <Grid>
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+      <Border Grid.Row="0" Classes="bar" IsVisible="{Binding ShowBar}">
+        <StackPanel>
+          <Grid ColumnDefinitions="*,Auto,Auto">
+            <TextBlock Grid.Column="0" Text="{Binding TabTitle}" IsVisible="{Binding ShowTitle}" Classes="barTitle" Margin="8,0" />
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="2" IsVisible="{Binding IsEventsSelected}" VerticalAlignment="Center">
+              <Button Content="Day" Command="{Binding Events.DayCommand}" Classes="segment" Classes.on="{Binding Events.IsDay}" />
+              <Button Content="Week" Command="{Binding Events.WeekCommand}" Classes="segment" Classes.on="{Binding Events.IsWeek}" />
+              <Button Content="Month" Command="{Binding Events.MonthCommand}" Classes="segment" Classes.on="{Binding Events.IsMonth}" />
+            </StackPanel>
+            <Button Grid.Column="1" Command="{Binding FeedsCommand}" IsVisible="{Binding CanManageFeeds}" Classes="icon" AutomationProperties.Name="Feeds">
+              <PathIcon Data="{StaticResource IconFeeds}" />
+            </Button>
+            <Button Grid.Column="2" Command="{Binding SettingsCommand}" Classes="icon" AutomationProperties.Name="Settings">
+              <PathIcon Data="{StaticResource IconSettings}" />
+            </Button>
+          </Grid>
+          <ProgressBar IsIndeterminate="True" IsVisible="{Binding ShowProgress}" Height="2" MinHeight="2" Foreground="{DynamicResource Accent}" />
+        </StackPanel>
+      </Border>
+      <Border Grid.Row="1" IsVisible="{Binding ShowUpdateOffer}" Background="{DynamicResource Selection}" Padding="12,2,8,2">
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBlock Grid.Column="0" Text="{Binding Update.Summary}" Classes="body" VerticalAlignment="Center" />
+          <Button Grid.Column="1" Content="Update" Command="{Binding Update.BeginCommand}" Classes="primary small" Margin="8,0,0,0" />
+        </Grid>
+      </Border>
+      <Grid Grid.Row="2">
+        <Panel IsVisible="{Binding IsMailSelected}">
+          <local:MailView DataContext="{Binding Mail}" />
+        </Panel>
+        <Panel IsVisible="{Binding IsEventsSelected}">
+          <local:EventsView DataContext="{Binding Events}" />
+        </Panel>
+        <Panel IsVisible="{Binding IsNewsSelected}">
+          <local:NewsView DataContext="{Binding News}" />
+        </Panel>
+        <Panel IsVisible="{Binding IsChatSelected}">
+          <local:ChatView DataContext="{Binding Chat}" />
+        </Panel>
+        <Panel IsVisible="{Binding HasSettings}">
+          <local:SettingsView DataContext="{Binding SettingsPage}" />
+        </Panel>
+      </Grid>
+      <Border Grid.Row="3" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Border}" BorderThickness="0,1,0,0">
+        <Grid ColumnDefinitions="*,*,*,*">
+          <Button Grid.Column="0" Command="{Binding MailCommand}" Classes="tab" Classes.on="{Binding IsMailSelected}">
+            <StackPanel Spacing="2">
+              <PathIcon Data="{StaticResource IconMail}" Width="22" Height="22" />
+              <TextBlock Text="Mail" />
+            </StackPanel>
+          </Button>
+          <Button Grid.Column="1" Command="{Binding EventsCommand}" Classes="tab" Classes.on="{Binding IsEventsSelected}">
+            <StackPanel Spacing="2">
+              <PathIcon Data="{StaticResource IconEvents}" Width="22" Height="22" />
+              <TextBlock Text="Events" />
+            </StackPanel>
+          </Button>
+          <Button Grid.Column="2" Command="{Binding NewsCommand}" Classes="tab" Classes.on="{Binding IsNewsSelected}">
+            <StackPanel Spacing="2">
+              <PathIcon Data="{StaticResource IconNews}" Width="22" Height="22" />
+              <TextBlock Text="News" />
+            </StackPanel>
+          </Button>
+          <Button Grid.Column="3" Command="{Binding ChatCommand}" Classes="tab" Classes.on="{Binding IsChatSelected}">
+            <StackPanel Spacing="2">
+              <PathIcon Data="{StaticResource IconChat}" Width="22" Height="22" />
+              <TextBlock Text="Chat" />
+            </StackPanel>
+          </Button>
+        </Grid>
+      </Border>
+    </Grid>
+    <Panel IsVisible="{Binding Update.IsOpen}">
+      <local:UpdateDialogView DataContext="{Binding Update}" />
+    </Panel>
+  </Grid>
+</UserControl>

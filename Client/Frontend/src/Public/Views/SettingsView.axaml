@@ -1,0 +1,69 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.SettingsView"
+             x:CompileBindings="False">
+  <Border Classes="overlay">
+    <Grid RowDefinitions="Auto,*">
+      <Border Grid.Row="0" Classes="bar">
+        <Grid ColumnDefinitions="Auto,*">
+          <Button Grid.Column="0" Command="{Binding BackCommand}" Classes="icon" AutomationProperties.Name="Back">
+            <PathIcon Data="{StaticResource IconBack}" />
+          </Button>
+          <TextBlock Grid.Column="1" Text="Settings" Classes="barTitle" Margin="4,0" />
+        </Grid>
+      </Border>
+      <ScrollViewer Grid.Row="1">
+        <StackPanel Margin="12,12" Spacing="14">
+          <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+            <TextBox Grid.Column="0" Text="{Binding Location}" PlaceholderText="Location, such as Austin, Texas" />
+            <Button Grid.Column="1" Command="{Binding SaveCommand}" Classes="icon" Classes.on="{Binding HasSaved}" AutomationProperties.Name="Save">
+              <PathIcon Data="{StaticResource IconCheck}" />
+            </Button>
+          </Grid>
+          <TextBlock Text="{Binding Error}" IsVisible="{Binding HasError}" Classes="error" />
+
+          <StackPanel Spacing="6">
+            <TextBlock Text="Refresh now" Classes="meta" />
+            <UniformGrid Columns="3">
+              <Button Command="{Binding RefreshMailCommand}" Classes="small" Margin="0,0,3,0" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <PathIcon Data="{StaticResource IconRefresh}" Width="16" Height="16" />
+                  <TextBlock Text="Mail" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+              <Button Command="{Binding RefreshEventsCommand}" Classes="small" Margin="3,0" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <PathIcon Data="{StaticResource IconRefresh}" Width="16" Height="16" />
+                  <TextBlock Text="Events" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+              <Button Command="{Binding RefreshNewsCommand}" Classes="small" Margin="3,0,0,0" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <PathIcon Data="{StaticResource IconRefresh}" Width="16" Height="16" />
+                  <TextBlock Text="News" VerticalAlignment="Center" />
+                </StackPanel>
+              </Button>
+            </UniformGrid>
+          </StackPanel>
+
+          <StackPanel Spacing="6">
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBlock Grid.Column="0" Text="{Binding Update.Versions}" Classes="meta" TextWrapping="Wrap" VerticalAlignment="Center" />
+              <Button Grid.Column="1" Content="Check for Updates" Command="{Binding Update.CheckCommand}" Classes="small" Margin="8,0,0,0" />
+            </Grid>
+            <TextBlock Text="{Binding Update.CheckResult}" IsVisible="{Binding Update.HasCheckResult}" Classes="body" />
+            <Button Content="Update" Command="{Binding Update.BeginCommand}" IsVisible="{Binding Update.IsAvailable}" Classes="primary small" HorizontalAlignment="Stretch" />
+          </StackPanel>
+
+          <Button Command="{Binding ChangeServerCommand}" Classes="small" HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <PathIcon Data="{StaticResource IconServer}" Width="16" Height="16" />
+              <TextBlock Text="Change Server" VerticalAlignment="Center" />
+            </StackPanel>
+          </Button>
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+  </Border>
+</UserControl>

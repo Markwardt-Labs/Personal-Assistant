@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <Include>[Markwardt.PersonalAssistant]*,[Markwardt.PersonalAssistant.Client]*,[Markwardt.PersonalAssistant.Server]*,[Markwardt.PersonalAssistant.Frontend]*</Include>
+          <Exclude>[Markwardt.PersonalAssistant.Tests]*</Exclude>
+          <ExcludeByAttribute>GeneratedCode,ExcludeFromCodeCoverage,CompilerGenerated</ExcludeByAttribute>
+          <IncludeTestAssembly>false</IncludeTestAssembly>
+          <SingleHit>false</SingleHit>
+          <DeterministicReport>false</DeterministicReport>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

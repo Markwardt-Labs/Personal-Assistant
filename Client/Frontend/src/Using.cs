@@ -1,0 +1,17 @@
+global using System.Collections.ObjectModel;
+global using System.Collections.Specialized;
+global using System.ComponentModel;
+global using System.Globalization;
+global using System.Net.Sockets;
+global using System.Net.WebSockets;
+global using System.Reflection;
+global using System.Runtime.CompilerServices;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
+global using System.Windows.Input;
+global using Avalonia;
+global using Avalonia.Controls;
+global using Avalonia.Interactivity;
+global using Avalonia.Markup.Xaml;
+global using Avalonia.Threading;
+global using Markwardt.PersonalAssistant;

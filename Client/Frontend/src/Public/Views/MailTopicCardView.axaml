@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.MailTopicCardView"
+             x:CompileBindings="False">
+  <Border Classes="card">
+    <Grid ColumnDefinitions="*,Auto">
+      <Button Grid.Column="0" Command="{Binding OpenCommand}" Classes="entry">
+        <StackPanel Spacing="2" Margin="0,2">
+          <Grid ColumnDefinitions="*,Auto">
+            <Grid Grid.Column="0" ColumnDefinitions="Auto,*">
+              <Ellipse Grid.Column="0" IsVisible="{Binding HasUnread}" Width="8" Height="8" Fill="{DynamicResource Accent}" Margin="0,0,6,0" VerticalAlignment="Center" />
+              <TextBlock Grid.Column="1" Text="{Binding Title}" Classes="entryTitle" />
+            </Grid>
+            <TextBlock Grid.Column="1" Text="{Binding ImportanceLabel}" IsVisible="{Binding HasImportanceLabel}" Classes.high="{Binding !IsCritical}" Classes.critical="{Binding IsCritical}" FontSize="12" Margin="8,2,0,0" />
+          </Grid>
+          <TextBlock Text="{Binding Summary}" Classes="body" MaxLines="3" TextTrimming="CharacterEllipsis" />
+          <TextBlock Classes="meta">
+            <Run Text="{Binding CountText}" /><Run Text=" - " /><Run Text="{Binding LatestText}" />
+          </TextBlock>
+        </StackPanel>
+      </Button>
+      <local:ReactionView Grid.Column="1" DataContext="{Binding Reaction}" VerticalAlignment="Top" />
+    </Grid>
+  </Border>
+</UserControl>

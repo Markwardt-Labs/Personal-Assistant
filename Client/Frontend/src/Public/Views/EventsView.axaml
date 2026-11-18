@@ -1,0 +1,93 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.EventsView"
+             x:CompileBindings="False">
+  <Grid>
+    <Grid RowDefinitions="Auto,Auto,*">
+      <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto" Margin="8,0">
+        <Button Grid.Column="0" Command="{Binding PreviousCommand}" Classes="icon" AutomationProperties.Name="Previous">
+          <PathIcon Data="{StaticResource IconPrevious}" />
+        </Button>
+        <TextBlock Grid.Column="1" Text="{Binding Title}" Classes="barTitle" HorizontalAlignment="Center" FontSize="15" />
+        <Button Grid.Column="2" Command="{Binding TodayCommand}" Classes="icon" AutomationProperties.Name="Today">
+          <PathIcon Data="{StaticResource IconToday}" />
+        </Button>
+        <Button Grid.Column="3" Command="{Binding NextCommand}" Classes="icon" AutomationProperties.Name="Next">
+          <PathIcon Data="{StaticResource IconNext}" />
+        </Button>
+      </Grid>
+      <StackPanel Grid.Row="1" Margin="12,0" Spacing="2">
+        <TextBlock Text="{Binding Error}" IsVisible="{Binding HasError}" Classes="error" />
+        <TextBlock Text="{Binding SuggestionsError}" IsVisible="{Binding HasSuggestionsError}" Classes="error" />
+        <TextBlock Text="{Binding CalendarError}" IsVisible="{Binding HasCalendarError}" Classes="error" />
+        <TextBlock Text="{Binding OutsideNotice}" IsVisible="{Binding HasOutsideNotice}" Classes="meta" TextWrapping="Wrap" />
+        <TextBlock Text="No feeds yet. Tap the feeds icon to add one and set your location in the settings." IsVisible="{Binding NeedsFeeds}" Classes="meta" TextWrapping="Wrap" />
+      </StackPanel>
+      <ScrollViewer Grid.Row="2">
+        <StackPanel Margin="12,4,12,8">
+          <ItemsControl ItemsSource="{Binding Days}" IsVisible="{Binding IsDays}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate DataType="local:AgendaDayViewModel">
+                <StackPanel Margin="0,0,0,4">
+                  <TextBlock Text="{Binding Label}" IsVisible="{Binding ShowLabel}" Classes="body" FontWeight="SemiBold" Classes.high="{Binding IsToday}" Classes.muted="{Binding IsEmpty}" Margin="2,6,0,4" />
+                  <ItemsControl ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate DataType="local:AgendaItemViewModel">
+                        <local:AgendaItemCardView />
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <StackPanel IsVisible="{Binding IsMonth}" Spacing="4">
+            <ItemsControl ItemsSource="{Binding Weekdays}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <UniformGrid Columns="7" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding}" Classes="meta" HorizontalAlignment="Center" />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <ItemsControl ItemsSource="{Binding Cells}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <UniformGrid Columns="7" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="local:MonthCellViewModel">
+                  <Button Command="{Binding SelectCommand}" Classes="entry" Opacity="1" Margin="1">
+                    <Border Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Border}" BorderThickness="1" CornerRadius="6" MinHeight="54" Padding="2,3">
+                      <StackPanel Spacing="2">
+                        <TextBlock Text="{Binding Day}" FontSize="13" HorizontalAlignment="Center" Classes.muted="{Binding !IsInMonth}" Classes.high="{Binding IsToday}" />
+                        <Border IsVisible="{Binding HasEvents}" Background="{DynamicResource Accent}" CornerRadius="8" Padding="4,0" HorizontalAlignment="Center">
+                          <TextBlock Text="{Binding EventsText}" FontSize="11" Foreground="White" />
+                        </Border>
+                        <Border IsVisible="{Binding HasSuggestions}" Background="{DynamicResource Suggested}" CornerRadius="8" Padding="4,0" HorizontalAlignment="Center">
+                          <TextBlock Text="{Binding SuggestionsText}" FontSize="11" Foreground="Black" />
+                        </Border>
+                      </StackPanel>
+                    </Border>
+                  </Button>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+    <Panel IsVisible="{Binding HasSelected}">
+      <local:EventDetailView />
+    </Panel>
+    <Panel IsVisible="{Binding IsManagingFeeds}">
+      <local:EventFeedsView />
+    </Panel>
+  </Grid>
+</UserControl>

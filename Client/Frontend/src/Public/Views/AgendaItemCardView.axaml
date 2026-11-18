@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.AgendaItemCardView"
+             x:CompileBindings="False">
+  <Border Classes="card" Classes.suggested="{Binding IsSuggestion}">
+    <Grid ColumnDefinitions="*,Auto">
+      <Button Grid.Column="0" Command="{Binding OpenCommand}" Classes="entry">
+        <StackPanel Spacing="1" Margin="0,2">
+          <Grid ColumnDefinitions="Auto,*">
+            <PathIcon Grid.Column="0" Data="{StaticResource IconStar}" IsVisible="{Binding IsSuggestion}" Width="12" Height="12" Foreground="{DynamicResource Suggested}" Margin="0,0,6,0" />
+            <TextBlock Grid.Column="1" Text="{Binding Title}" Classes="entryTitle" />
+          </Grid>
+          <TextBlock Text="{Binding TimeText}" Classes="meta" />
+          <TextBlock Text="{Binding Place}" IsVisible="{Binding HasPlace}" Classes="meta" TextTrimming="CharacterEllipsis" />
+        </StackPanel>
+      </Button>
+      <Panel Grid.Column="1" IsVisible="{Binding HasReaction}" VerticalAlignment="Top">
+        <local:ReactionView DataContext="{Binding Reaction}" />
+      </Panel>
+    </Grid>
+  </Border>
+</UserControl>

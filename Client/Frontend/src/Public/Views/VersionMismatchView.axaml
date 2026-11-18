@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.VersionMismatchView"
+             x:CompileBindings="False">
+  <Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+      <StackPanel MaxWidth="440" Margin="24,32" Spacing="12" VerticalAlignment="Center">
+        <TextBlock Text="Personal Assistant" Classes="title" FontSize="30" HorizontalAlignment="Center" Margin="0,0,0,12" />
+        <TextBlock Text="{Binding Message}" Classes="wrap" />
+        <TextBlock Text="{Binding Hint}" Classes="muted wrap" />
+        <Button Content="Update" Command="{Binding Update.BeginCommand}" IsVisible="{Binding Update.IsAvailable}" Classes="primary" HorizontalAlignment="Stretch" Margin="0,6,0,0" />
+        <Button Content="Change Server" Command="{Binding ChangeServerCommand}" HorizontalAlignment="Stretch" />
+      </StackPanel>
+    </ScrollViewer>
+    <Panel IsVisible="{Binding Update.IsOpen}">
+      <local:UpdateDialogView DataContext="{Binding Update}" />
+    </Panel>
+  </Grid>
+</UserControl>

@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.MailView"
+             x:CompileBindings="False">
+  <Grid>
+    <ScrollViewer IsVisible="{Binding IsList}">
+      <StackPanel Margin="12,8">
+        <TextBlock Text="{Binding Error}" IsVisible="{Binding HasError}" Classes="error" Margin="0,0,0,6" />
+        <TextBlock Text="{Binding DigestError}" IsVisible="{Binding HasDigestError}" Classes="error" Margin="0,0,0,6" />
+        <TextBlock Text="No mail in the last 7 days." IsVisible="{Binding IsEmpty}" Classes="muted" />
+        <ItemsControl ItemsSource="{Binding Topics}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="local:MailTopicViewModel">
+              <local:MailTopicCardView />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Command="{Binding ToggleOtherCommand}" IsVisible="{Binding HasOther}" Classes="flat" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="4,8" Margin="0,2,0,4">
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Grid.Column="0" Text="{Binding OtherHeader}" Classes="muted body" FontWeight="SemiBold" VerticalAlignment="Center" />
+            <PathIcon Grid.Column="1" Data="{StaticResource IconExpand}" Width="20" Height="20" Foreground="{DynamicResource Muted}" IsVisible="{Binding !IsOtherExpanded}" />
+            <PathIcon Grid.Column="1" Data="{StaticResource IconCollapse}" Width="20" Height="20" Foreground="{DynamicResource Muted}" IsVisible="{Binding IsOtherExpanded}" />
+          </Grid>
+        </Button>
+        <ItemsControl ItemsSource="{Binding OtherTopics}" IsVisible="{Binding IsOtherExpanded}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="local:MailTopicViewModel">
+              <local:MailTopicCardView />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </ScrollViewer>
+    <ContentControl Content="{Binding Page}" IsVisible="{Binding HasPage}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+      <ContentControl.DataTemplates>
+        <DataTemplate DataType="local:MailTopicViewModel">
+          <local:MailTopicPageView />
+        </DataTemplate>
+        <DataTemplate DataType="local:MailMessageViewModel">
+          <local:MailMessageView />
+        </DataTemplate>
+      </ContentControl.DataTemplates>
+    </ContentControl>
+  </Grid>
+</UserControl>

@@ -1,0 +1,15 @@
+# Updates
+
+`ReleaseFeed`, `AppVersion`, `ExecutableInstaller`, `ServerUpdater`, `ServerRestart` on the server, and `UpdateViewModel`, `VersionMismatchViewModel`, `MainViewModel` and `AndroidUpdater` on the client.
+
+## Finding the release
+
+`IReleaseFeed` reads the latest release of `Markwardt-Labs/Personal-Assistant` from the public GitHub API without a token, which leaves out drafts and pre-releases. The tag is the version, so a tag that is not `major.minor.patch` with an optional suffix is ignored. Downloads are checked against the size and the SHA-256 digest GitHub states for each asset, and a mismatch discards the file. Versions are ordered numerically, and a suffixed version is earlier than the final release. The assets are `PersonalAssistant-Server-linux`, `PersonalAssistant-Server-win.exe` and `PersonalAssistant-android.apk`.
+
+## The server
+
+A client sends `UpdateServer`; the server compares its version with the newest release, downloads the executable for its platform next to the running one (so the final move never crosses a file system) and asks `IServerRestart` to shut down after a second, so the answer gets out first. When its sessions, schedules and listener are closed it puts the new executable in place: renamed over the running file on Linux, and on Windows the running file is renamed to `.old` (deleted on the next start) and put back if the move fails. Before that it starts a harmless process (`/bin/true`, `cmd /c exit`) so that everything starting a process needs is loaded, because a single-file program loads assemblies lazily from its executable, which has changed by then. Under a service manager (`INVOCATION_ID` is set) the server exits with code 75 and relies on a restart on failure policy; otherwise it starts the new executable with the same arguments. A server started with `dotnet` has no executable of its own and refuses to update.
+
+## The client
+
+The server reports its version in the handshake and the app compares it with its own; a difference replaces the tabs with a screen that shows both versions and offers Update or Change Server, and it goes away when the versions match after a reconnect. `UpdateViewModel` looks up the newest release when it connects and every hour, offers an update when the release is newer than the app (and the app can install itself) or the server, and runs it after the user confirms: the server first, then the app. From the confirmation on the updating screen replaces whatever is showing, and it cannot be closed while it works. While the server restarts, the lost connection is not treated as a failure: `MainViewModel` tries again every three seconds for ten minutes and, when the server answers, shows the tabs again (or the mismatch screen when the app is still older), or gives up with the connect screen. The Android head downloads the APK to its cache and hands it to the system installer through a `FileProvider`; the first time the user has to allow the app to install packages, and the APK must be signed with the key of the installed app.

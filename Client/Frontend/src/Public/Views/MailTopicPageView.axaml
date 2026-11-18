@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Markwardt.PersonalAssistant.Client"
+             x:Class="Markwardt.PersonalAssistant.Client.MailTopicPageView"
+             x:CompileBindings="False">
+  <Grid RowDefinitions="Auto,*">
+    <Border Grid.Row="0" Classes="bar">
+      <StackPanel>
+        <Grid ColumnDefinitions="Auto,*,Auto">
+          <Button Grid.Column="0" Command="{Binding BackCommand}" Classes="icon" AutomationProperties.Name="Back">
+            <PathIcon Data="{StaticResource IconBack}" />
+          </Button>
+          <TextBlock Grid.Column="1" Text="{Binding Title}" Classes="barTitle" Margin="4,0" />
+          <local:ReactionView Grid.Column="2" DataContext="{Binding Reaction}" />
+        </Grid>
+        <TextBlock Text="{Binding Summary}" Classes="body muted" Margin="12,0,12,6" />
+      </StackPanel>
+    </Border>
+    <ScrollViewer Grid.Row="1">
+      <ItemsControl ItemsSource="{Binding Items}" Margin="12,8">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="local:MailItemViewModel">
+            <Border Classes="card">
+              <Button Command="{Binding OpenCommand}" Classes="entry">
+                <StackPanel Spacing="2" Margin="0,2,6,2">
+                  <Grid ColumnDefinitions="Auto,*">
+                    <Ellipse Grid.Column="0" IsVisible="{Binding IsUnread}" Width="8" Height="8" Fill="{DynamicResource Accent}" Margin="0,0,6,0" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Text="{Binding Subject}" Classes="entryTitle" />
+                  </Grid>
+                  <TextBlock Classes="meta">
+                    <Run Text="{Binding From}" /><Run Text=" - " /><Run Text="{Binding TimeText}" />
+                  </TextBlock>
+                  <TextBlock Text="{Binding Preview}" Classes="body" MaxLines="2" TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+              </Button>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </Grid>
+</UserControl>
